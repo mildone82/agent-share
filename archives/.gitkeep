@@ -1,0 +1,6 @@
+# .gitkeep
+
+This directory stores shared context files exchanged between agents
+on different machines via git push/pull.
+
+Context files follow the naming convention: YYYY-MM-DD-description.md
