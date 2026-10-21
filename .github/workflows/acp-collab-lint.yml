@@ -1,0 +1,81 @@
+# ACP collaboration lint. Not guardrails.yml, and not Zed / PyPI acplint.
+name: acp-collab-lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  acp-collab-lint:
+    name: acp-collab-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install lint deps
+        run: pip install -r scripts/acp-lint/requirements.txt
+
+      - name: Self-test (able to fail)
+        run: python scripts/acp-lint/lint.py --self-test
+
+      - name: ACP lint against base
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "${BASE_REF}" ] || [ "${BASE_REF}" = "0000000000000000000000000000000000000000" ]; then
+            BASE_REF="origin/main"
+          fi
+          python scripts/acp-lint/lint.py --base "${BASE_REF}" --mode ci
+
+      - name: Path denylist
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "${BASE_REF}" ] || [ "${BASE_REF}" = "0000000000000000000000000000000000000000" ]; then
+            BASE_REF="origin/main"
+          fi
+          python scripts/acp-lint/lint.py --paths-only --base "${BASE_REF}" --mode ci
+
+  secrets:
+    name: secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        run: |
+          curl -sSL -o /tmp/gitleaks.tar.gz \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
+
+      - name: gitleaks
+        run: gitleaks detect --source . --config .gitleaks.toml --redact --verbose
+
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --from-ref origin/main --to-ref HEAD

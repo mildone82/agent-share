@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mildone82/agent-share/blob/main/.acp/schemas/mission.schema.json",
+  "title": "ACP buffer mission card",
+  "type": "object",
+  "required": ["mission_id", "role_owner", "status", "plan_path", "evidence_path"],
+  "properties": {
+    "mission_id": {"type": "string", "minLength": 1},
+    "role_owner": {"type": "string", "minLength": 1},
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "claimed",
+        "in_progress",
+        "blocked",
+        "awaiting_verify",
+        "complete",
+        "archived"
+      ]
+    },
+    "plan_path": {"type": "string", "minLength": 1},
+    "evidence_path": {"type": "string", "minLength": 1},
+    "reviewers": {"type": "array", "items": {"type": "string"}},
+    "agent": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "task_id": {"type": "string"},
+    "source": {"type": "string"},
+    "target": {"type": "string"},
+    "playbook": {"type": "string"}
+  },
+  "additionalProperties": true
+}

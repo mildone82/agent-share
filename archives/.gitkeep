@@ -1,6 +1,5 @@
 # .gitkeep
 
-This directory stores shared context files exchanged between agents
-on different machines via git push/pull.
-
-Context files follow the naming convention: YYYY-MM-DD-description.md
+Completed and dispositioned tasks are archived here.
+Keep `task_id` in frontmatter so the archive stays traceable.
+This is not the live context exchange; that directory is `contexts/`.

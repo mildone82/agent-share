@@ -1,0 +1,9 @@
+# Human merge only. First version lists the repo owner and nobody else.
+/.github/                  @mildone82
+/scripts/acp-lint/         @mildone82
+/.acp/CONTEXT.md           @mildone82
+/README.md                 @mildone82
+/.pre-commit-config.yaml   @mildone82
+/docs/guardrails/          @mildone82
+/CODEOWNERS                @mildone82
+/.gitleaks.toml            @mildone82

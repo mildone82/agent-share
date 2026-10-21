@@ -1,0 +1,4 @@
+# .gitkeep
+
+Execution logs and traces live in this directory.
+Prefer one file per task: YYYY-MM-DD-task-name-log.md
