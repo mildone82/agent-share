@@ -1,0 +1,90 @@
+version: 1
+notes: >
+  Role paths are enforced when acp-collab-lint is run with --role.
+  Global filename denies are always enforced by the linter.
+
+global_deny:
+  - "**/.env"
+  - "**/.env.*"
+  - "**/credentials*"
+  - "**/*secret*"
+  - "**/*.pem"
+  - "**/*.key"
+  - "**/id_rsa*"
+  - "**/.aws/credentials"
+  - "**/kubeconfig*"
+  - "**/node_modules/**"
+  - "**/__pycache__/**"
+  - "**/.venv/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/*.pyc"
+
+roles:
+  planner:
+    allow:
+      - ".acp/plan/**"
+      - ".acp/status/**"
+      - ".acp/buffer/**"
+    deny:
+      - ".acp/deliverables/**"
+      - "docs/guardrails/**"
+      - ".github/**"
+      - "scripts/acp-lint/**"
+  implementer:
+    allow:
+      - ".acp/status/**"
+      - ".acp/logs/**"
+      - ".acp/buffer/**"
+      - ".acp/evidence/**"
+      - "contexts/**"
+    deny:
+      - ".acp/deliverables/**"
+      - "docs/guardrails/**"
+      - ".github/**"
+      - "scripts/acp-lint/**"
+      - "CODEOWNERS"
+      - "README.md"
+  delivery:
+    allow:
+      - ".acp/deliverables/**"
+      - "archives/**"
+      - ".acp/status/**"
+      - ".acp/evidence/**"
+    deny:
+      - ".acp/plan/**"
+      - "docs/guardrails/**"
+      - "scripts/acp-lint/**"
+  juha:
+    allow:
+      - "docs/guardrails/**"
+      - ".github/**"
+      - ".pre-commit-config.yaml"
+      - "scripts/acp-lint/**"
+      - ".acp/CONTEXT.md"
+      - "README.md"
+      - "CODEOWNERS"
+      - ".gitignore"
+      - ".gitleaks.toml"
+      - ".acp/crew/**"
+      - ".acp/schemas/**"
+      - ".acp/logs/**"
+      - "snippets/**"
+      - "archives/**"
+    deny: []
+  courier:
+    allow:
+      - "contexts/**"
+    deny:
+      - "docs/guardrails/**"
+      - ".github/**"
+      - "scripts/acp-lint/**"
+  human:
+    allow:
+      - "**"
+    deny: []
+  minimal:
+    allow:
+      - "contexts/**"
+      - ".acp/status/**"
+    deny: []

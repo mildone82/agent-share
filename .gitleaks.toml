@@ -1,0 +1,12 @@
+title = "agent-share"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Historical S3 inventory files already on main. See docs/guardrails/KNOWN_DEBT.md. New lines are still scanned by acp-collab-lint."
+paths = [
+  '''\.acp/plan/2026-06-07-aws-s3-inventory-report\.md''',
+  '''\.acp/deliverables/2026-06-07-aws-s3-inventory-report-complete\.md''',
+  '''archives/2026-06-07-aws-s3-inventory-report\.md''',
+]

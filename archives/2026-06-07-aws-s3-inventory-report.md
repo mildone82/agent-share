@@ -2,12 +2,16 @@
 agent: hermes-macbook
 timestamp: 2026-06-07T08:55:00+08:00
 task_id: aws-s3-inventory-report-001
-status: pending
+status: archived
+disposition: archive
+disposition_reason: Stale pending plan with no owner; the inventory deliverable already exists. Archived under ACP-DISP-001 and not reopened.
 source: macbook-pro
 target: hermes-mac-mini
 ---
 
 # Task: AWS S3 Inventory Report
+
+> Disposition (2026-10-21): archived. Stale pending plan with no owner. Historical body is unchanged. See docs/guardrails/KNOWN_DEBT.md.
 
 ## Objective
 

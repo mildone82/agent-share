@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: acp-lint
+        name: ACP collaboration lint
+        entry: python scripts/acp-lint/lint.py
+        language: python
+        additional_dependencies: ["pyyaml==6.0.2"]
+        pass_filenames: false
+        files: '(\.acp/|contexts/|archives/|docs/guardrails/).*\.(md|json|ya?ml)$'
+
+      - id: path-boundary
+        name: Directory boundary check
+        entry: python scripts/acp-lint/lint.py --paths-only
+        language: python
+        additional_dependencies: ["pyyaml==6.0.2"]
+        pass_filenames: false
